@@ -1,0 +1,334 @@
+# This is the beggining of a  python code for Granite selection extracted from Watsonx
+import requests
+
+url = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
+
+body = {
+	"input": """Selection of appropriate Granite model
+
+Input: My name is Richard I am not certain which Granite model to use.
+I seek to create a prompt that  can  create responses that uses Natural Language Processing  which makes it easy to understand. 
+Please provide a description.
+
+Granite-13b-chat-v2.1 is a chat model optimized for dialogue use cases that works well with virtual agents and chat applications.
+Granite-13b-instruct-v2.1 is an instruct model trained on high-quality finance data to perform well in finance domain tasks.
+Granite-20b-multilingual is trained to understand and generate
+ text in English, German, Spanish, French and Portuguese.
+ Granite-7b-lab supports general-purpose tasks and is tuned using the IBM’s large-scale alignment of chatbots (LAB) methodology to incorporate new skills.
+Granite-20B-Code-Instruct is a 20B parameter model fine tuned from Granite-20B-Code-Base on a combination of permissively licensed instruction data to enhance instruction following capabilities including logical reasoning and problem-solving skills.
+Granite-34B-Code-Instruct is a 34B parameter model fine tuned from Granite-34B-Code-Base on a combination of permissively licensed instruction data to enhance instruction following capabilities including logical reasoning and problem-solving skills.
+Granite-3B-Code-Instruct is a 3B parameter model fine tuned from Granite-3B-Code-Base on a combination of permissively licensed instruction data to enhance instruction following capabilities including logical reasoning and problem-solving skills.
+Granite-8B-Code-Instruct is a 8B parameter model fine tuned from Granite-8B-Code-Base on a combination of permissively licensed instruction data to enhance instruction following capabilities including logical reasoning and problem-solving skills.
+Output: Granite-7b-lab  would be best suited as where instead of large-scale pre-training and small-to-medium scale alignment, we do very large-scale targeted alignment for a generalist LLM (so not only chat and RAG use cases, but also other NLP tasks and downstream infusion tasks). This means that the LAB approach improves:
+
+the base model performance quite drastically by knowledge infusion via phase 0
+instruction following performance via skills and style infusion
+Furthermore, LAB leverages taxonomy-based synthetic data generation which allows for directed/task-specific data generation at scale and removes the reliance on costly human-annotated data.
+
+The Granite 7 Billion LAB (granite-7b-lab) model is the chat-focused variant initialized from the pre-trained Granite 7 Billion (granite-7b) model described in our PyTorch blog, which was pre-trained for 2T tokens.
+
+
+
+Input: 
+Output:  
+
+Input: My name is Ann i seek to use a Granite model to create a chatbot.
+Please state which should I use 
+Output:""",
+	"parameters": {
+		"decoding_method": "greedy",
+		"max_new_tokens": 200,
+		"repetition_penalty": 1
+	},
+	"model_id": "ibm/granite-13b-instruct-v2",
+	"project_id": "306e9a0f-4162-4287-b742-899618afbc81"
+}
+
+headers = {
+	"Accept": "application/json",
+	"Content-Type": "application/json",
+	"Authorization": "Bearer YOUR_ACCESS_TOKEN"
+}
+
+response = requests.post(
+	url,
+	headers=headers,
+	json=body
+)
+
+if response.status_code != 200:
+	raise Exception("Non-200 response: " + str(response.text))
+
+data = response.json()
+# This is the end of the code
+
+# This is the beggining of a python code by use of granite-20b-multilingual
+import requests
+
+url = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
+
+body = {
+	"input": """This prompt lab translates texts from one language to another by use of granite-20b-multilingual
+
+Input: My name is Daniel.
+I request to  learn about data science.
+I am an engineer.
+Please note that i am not computer literate, meaning i know little about computer science.
+I also have an accounting degree.
+Output: To an engineer, data science can be described as a multidisciplinary field that combines mathematics, statistics and domain-specific knowledge to extract meaningful insights and actionable knowledge from data.
+
+Here’s a breakdown that relates closely to an engineering perspective:
+
+Data collection and management: Just like in engineering, where precise measurements and data are critical, data science involves gathering accurate and relevant data. This data can come from various sources like sensors, databases, and logs.
+
+Data processing and cleaning: Similar to how an engineer might refine raw materials or optimize processes, a data scientist cleans and preprocesses raw data. This step ensures the data is in a usable format, removing noise, handling missing values, and ensuring consistency.
+
+Modeling and analysis: Engineers often use mathematical models to simulate physical systems. In data science, statistical and machine learning models are built to understand patterns, make predictions, or classify data. This involves using algorithms to analyze data, much like how an engineer uses formulas and simulations to analyze a system.
+
+Optimization and decision-making: Just as engineers design solutions and optimize systems based on certain criteria (like cost, efficiency, or safety), data scientists use models to make data-driven decisions, optimize business processes, or recommend actions.
+
+Automation and scalability: In engineering, automation is key to efficiency and scale. Data science often involves building automated systems that can process data and generate insights at scale, enabling continuous learning and adaptation.
+
+Visualization and communication: Data scientists, like engineers, need to present their findings in a clear and understandable way. This often involves creating visualizations that highlight key insights and communicating results to stakeholders who may not have a technical background.
+
+Input: My name is Patrick.
+I am a civil engineer.
+I request to know how watsonx.ai could assist me in construction of roads.
+Please note that I have no knowledge of IBM software.
+Output: To a civil engineer, Watsonx.ai which  is a part of IBM'\''\'\'''\''s Watsonx platform, designed to provide a comprehensive suite of AI tools and services tailored for businesses and developers. 
+Watsonx.ai could be useful to you as a civil engineer in the following ways;
+1. Watsonx.ai has foundation models which is characterized by custom training. A civil engineer can train custom models using their own data, allowing them to create AI solutions that are highly tailored to their specific needs and industries. By analyzing historical accident data and identifying high-risk areas, watsonx.ai can assist in designing safer roads with features like better lighting, appropriate speed limits, and effective signage
+ 2. Watsonx.ai provides generative AI capabilities for tasks such as creating text, summarizing documents, and automating report generation. Watsonx.ai can use generative design algorithms to create optimized road layouts that consider various factors such as terrain, existing infrastructure, traffic patterns, and safety requirements. This can lead to more efficient and cost-effective road designs
+
+
+Input: Mon nom est Samuel.
+Je suis dentiste. 
+Veuillez noter que je n ai aucune connaissance en informatique. 
+Je souhaite apprendre ce qu'\''\'\'''\''est un \\"prompt  en programmation.
+Convert  to English
+Output: To a dentist, a prompt can be explained as follows:
+
+In various contexts, a prompt is essentially a cue or request for specific information or action.
+
+In General Terms:
+Prompt as a Request: Imagine when a patient is asked to provide details about their state of their teeth during an appointment. This request for information acts as a prompt, guiding the patient to share relevant details that help you diagnose and treat them effectively.
+In Programming and Technology:
+Prompt as a User Input Request: In programming, a prompt is a message or symbol that appears on a computer screen or interface asking the user to enter information or perform a task. For example, a computer program might display a prompt asking you to enter your username and password. This could be similar to a pulp, since it is a sensitive tissue inside the tooth it could indicate (display) whether a drink is cold or warm.
+In AI and Generative Tools:
+Prompt for Generating Content: For AI tools and software, a prompt is the input or instruction given to the AI to generate a response or output. For instance, if you use an AI to help write an article about dental health, you might provide a prompt like \\"Write an overview of the benefits of regular dental check-ups,\\" and the AI will generate content based on that prompt.
+
+Input: Mein Name ist Mary.
+Ich möchte lernen, was ein Prompt ist.
+Bitte beachten Sie, dass ich Elektrikerin bin.
+Ich habe begrenzte Kenntnisse in Informatik.
+Convert the response to English.
+Output:""",
+	"parameters": {
+		"decoding_method": "greedy",
+		"max_new_tokens": 200,
+		"repetition_penalty": 1
+	},
+	"model_id": "ibm/granite-20b-multilingual",
+	"project_id": "3d014b01-59d3-49e9-898d-013f9c2fc90b"
+}
+
+headers = {
+	"Accept": "application/json",
+	"Content-Type": "application/json",
+	"Authorization": "Bearer YOUR_ACCESS_TOKEN"
+}
+
+response = requests.post(
+	url,
+	headers=headers,
+	json=body
+)
+
+if response.status_code != 200:
+	raise Exception("Non-200 response: " + str(response.text))
+
+data = response.json()
+
+# This is the end of a python code by use of granite-20b-multilingual
+
+# This is a python code that summarizes responses by use of Granite-20B-Code-Instruct 
+import requests
+
+url = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
+
+body = {
+	"input": """Summarization of  technological terms as well as use Watsonx . Uses Granite-20B-Code-Instruct  to enhance instruction following capabilities including logical reasoning and problem-solving skills.
+
+Input: Input: My name is Daniel.
+I request to  learn about data science.
+I am an engineer.
+Please note that I am not computer literate, meaning I know little about computer science.
+I also have an accounting degree.
+Output: To an engineer, data science can be described as a multidisciplinary field that combines mathematics, statistics and domain-specific knowledge to extract meaningful insights and actionable knowledge from data.
+
+Here’s a breakdown that relates closely to an engineering perspective:
+
+Data collection and management: Just like in engineering, where precise measurements and data are critical, data science involves gathering accurate and relevant data. This data can come from various sources like sensors, databases, and logs.
+
+Data processing and cleaning: Similar to how an engineer might refine raw materials or optimize processes, a data scientist cleans and preprocesses raw data. This step ensures the data is in a usable format, removing noise, handling missing values, and ensuring consistency.
+
+Modeling and analysis: Engineers often use mathematical models to simulate physical systems. In data science, statistical and machine learning models are built to understand patterns, make predictions, or classify data. This involves using algorithms to analyze data, much like how an engineer uses formulas and simulations to analyze a system.
+
+Optimization and decision-making: Just as engineers design solutions and optimize systems based on certain criteria (like cost, efficiency, or safety), data scientists use models to make data-driven decisions, optimize business processes, or recommend actions.
+
+Automation and scalability: In engineering, automation is key to efficiency and scale. Data science often involves building automated systems that can process data and generate insights at scale, enabling continuous learning and adaptation.
+
+Visualization and communication: Data scientists, like engineers, need to present their findings in a clear and understandable way. This often involves creating visualizations that highlight key insights and communicating results to stakeholders who may not have a technical background.
+
+Input: My  name is Faith.
+I request to learn what machine learning is.
+I study medicine.
+Please provide practical applications of machine learning in the pharmaceutical sector.
+Output: To a pharmacist, machine learning can be explained as a technology that allows computers to learn from data and improve their performance over time without being explicitly programmed for specific tasks. 
+Just like pharmacists use their knowledge and experience to make decisions about medications and patient care, machine learning uses patterns in data to make predictions or decisions.
+
+Here’s a breakdown of machine learning in a way that relates to pharmacy:
+
+Learning from Data: Imagine you’re reviewing patient records to understand which medications have been most effective for a particular condition. Over time, you might notice patterns, such as certain drugs working better for specific patient groups. Machine learning does something similar but on a much larger scale and with greater speed. It analyzes vast amounts of data to identify patterns and make predictions.
+
+Improving Over Time: Just as a pharmacist'\''\'\'''\''s knowledge grows with experience, machine learning models improve as they process more data. For example, if a machine learning model is trained on a dataset of patient outcomes and medication usage, it can learn which medications are most effective for certain conditions and continuously refine its predictions as it encounters more data.
+
+Applications in Pharmacy:
+
+Personalized Medicine: Machine learning can analyze a patient’s medical history, genetics, lifestyle, and other factors to predict how they might respond to different medications. This can help in recommending the most effective and safe drug for that individual, similar to how a pharmacist would consider these factors when advising a patient.
+Drug Discovery: Machine learning models can sift through massive datasets of chemical compounds and biological targets to identify potential new drugs more quickly and accurately than traditional methods. It’s like having an assistant that can quickly go through all the research papers and experiments to find promising leads for new medications.
+Medication Adherence: Machine learning can help identify patterns in patient behavior that indicate whether they are likely to adhere to their prescribed medications. This is similar to how a pharmacist might notice signs that a patient is not taking their medication properly and take steps to address it.
+Automating Repetitive Tasks: In pharmacy, some tasks, like inventory management or medication dispensing, can be repetitive. Machine learning can automate these tasks, allowing pharmacists to focus more on patient care and clinical decision-making.
+
+Input: My name is Paul.
+I request to learn  what generative artificial intelligence means.
+I am a farmer.
+Please also state what makes generative artificial intelligence useful.
+Output: To a farmer, generative artificial intelligence (AI) can be explained as a type of technology that allows computers to create new content, like images, text, or even ideas, based on patterns and examples it has learned from.
+ It’s like teaching a machine how to think creatively and come up with new things on its own, much like how a farmer might experiment with new farming techniques or crop rotations based on past experiences.
+
+Here’s how generative AI relates to farming:
+
+Learning from Examples: Think about how a farmer learns which crops grow best in certain conditions by observing past harvests. Similarly, generative AI learns from large amounts of data to understand patterns. For example, it might analyze thousands of pictures of healthy crops to understand what they look like.
+
+Creating New Things: Just like a farmer might use knowledge about soil and weather to develop a new planting strategy, generative AI can create new content based on what it has learned. For instance, it could generate new designs for a farm layout that maximize sunlight exposure and water usage or even create synthetic images of crops to help with training other AI models for detecting diseases.
+
+Practical Applications in Farming:
+
+Crop and Soil Health Monitoring: Generative AI can be used to simulate different crop growth scenarios or predict how changes in farming practices might affect yield. For example, it could generate images showing what a crop might look like if it has a certain disease, helping farmers quickly identify issues in the field.
+Weather Predictions: By analyzing historical weather patterns and current conditions, generative AI can help predict future weather scenarios, allowing farmers to plan their activities, such as planting, irrigation, and harvesting, more effectively.
+Automated Reports and Insights: Generative AI can help create detailed reports or summaries about farm performance, suggesting changes in practices or new techniques to improve yields. It’s like having a digital assistant that not only analyzes data but also provides actionable advice based on what it has learned.
+Generating New Ideas and Strategies: Generative AI can help farmers explore new methods and strategies by simulating different approaches and predicting outcomes. For example, it could generate a new crop rotation plan optimized for soil health and pest management, helping farmers try new methods that could lead to better yields or sustainability.
+
+Input: My name is Patrick.
+I am a civil engineer.
+I request to know how watsonx.ai could assist me in construction of roads.
+Please note that I have no knowledge of IBM software.
+Output: To a civil engineer, Watsonx.ai which  is a part of IBM'\''\'\'''\''s Watsonx platform, designed to provide a comprehensive suite of AI tools and services tailored for businesses and developers. 
+Watsonx.ai could be useful to you as a civil engineer in the following ways;
+1. Watsonx.ai has foundation models which is characterized by custom training. A civil engineer can train custom models using their own data, allowing them to create AI solutions that are highly tailored to their specific needs and industries. By analyzing historical accident data and identifying high-risk areas, watsonx.ai can assist in designing safer roads with features like better lighting, appropriate speed limits, and effective signage
+ 2. Watsonx.ai provides generative AI capabilities for tasks such as creating text, summarizing documents, and automating report generation. Watsonx.ai can use generative design algorithms to create optimized road layouts that consider various factors such as terrain, existing infrastructure, traffic patterns, and safety requirements. This can lead to more efficient and cost-effective road designs
+
+Input: My name is Mary
+I request to learn what a prompt is.
+Please note that i am an electrician.
+I have limited knowledge on computer science.
+
+Output:""",
+	"parameters": {
+		"decoding_method": "greedy",
+		"max_new_tokens": 200,
+		"repetition_penalty": 1
+	},
+	"model_id": "ibm/granite-20b-code-instruct",
+	"project_id": "24368530-53eb-463f-b30f-e867c28ea380"
+}
+
+headers = {
+	"Accept": "application/json",
+	"Content-Type": "application/json",
+	"Authorization": "Bearer YOUR_ACCESS_TOKEN"
+}
+
+response = requests.post(
+	url,
+	headers=headers,
+	json=body
+)
+
+if response.status_code != 200:
+	raise Exception("Non-200 response: " + str(response.text))
+
+data = response.json()
+# This is the end of the python code
+
+# This is the beginning  of a python code for illustration by use of Granite 13 Billion chat V2
+import requests
+
+url = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
+
+body = {
+	"input": """This project offers a illustration  of questions  by use of the Granite 13 Billion chat V2, as it uses large a volume of data that has been subjected to intensive pre-processing and analysis
+
+Input: Input: My name is Daniel.
+I request to  learn about data science.
+I am an engineer.
+Please note that I am not computer literate, meaning I know little about computer science.
+I also have an accounting degree.
+Output: To an engineer, data science can be described as a multidisciplinary field that combines mathematics, statistics and domain-specific knowledge to extract meaningful insights and actionable knowledge from data.
+
+Here’s a breakdown that relates closely to an engineering perspective:
+
+Data collection and management: Just like in engineering, where precise measurements and data are critical, data science involves gathering accurate and relevant data. This data can come from various sources like sensors, databases, and logs.
+
+Data processing and cleaning: Similar to how an engineer might refine raw materials or optimize processes, a data scientist cleans and preprocesses raw data. This step ensures the data is in a usable format, removing noise, handling missing values, and ensuring consistency.
+
+Modeling and analysis: Engineers often use mathematical models to simulate physical systems. In data science, statistical and machine learning models are built to understand patterns, make predictions, or classify data. This involves using algorithms to analyze data, much like how an engineer uses formulas and simulations to analyze a system.
+
+Optimization and decision-making: Just as engineers design solutions and optimize systems based on certain criteria (like cost, efficiency, or safety), data scientists use models to make data-driven decisions, optimize business processes, or recommend actions.
+
+Automation and scalability: In engineering, automation is key to efficiency and scale. Data science often involves building automated systems that can process data and generate insights at scale, enabling continuous learning and adaptation.
+
+Visualization and communication: Data scientists, like engineers, need to present their findings in a clear and understandable way. This often involves creating visualizations that highlight key insights and communicating results to stakeholders who may not have a technical background.
+
+Input: My name is Patrick.
+I am a civil engineer.
+I request to know how watsonx.ai could assist me in construction of roads.
+Please note that I have no knowledge of IBM software.
+Output: To a civil engineer, Watsonx.ai which  is a part of IBM'\''\'\'''\''s Watsonx platform, designed to provide a comprehensive suite of AI tools and services tailored for businesses and developers. 
+Watsonx.ai could be useful to you as a civil engineer in the following ways;
+1. Watsonx.ai has foundation models which is characterized by custom training. A civil engineer can train custom models using their own data, allowing them to create AI solutions that are highly tailored to their specific needs and industries. By analyzing historical accident data and identifying high-risk areas, watsonx.ai can assist in designing safer roads with features like better lighting, appropriate speed limits, and effective signage
+ 2. Watsonx.ai provides generative AI capabilities for tasks such as creating text, summarizing documents, and automating report generation. Watsonx.ai can use generative design algorithms to create optimized road layouts that consider various factors such as terrain, existing infrastructure, traffic patterns, and safety requirements. This can lead to more efficient and cost-effective road designs
+
+Input: My name is Mary
+I request to learn what a prompt is.
+Please note that i am an electrician.
+I have limited knowledge on computer science.
+
+Output:""",
+	"parameters": {
+		"decoding_method": "greedy",
+		"max_new_tokens": 200,
+		"repetition_penalty": 1
+	},
+	"model_id": "ibm/granite-13b-chat-v2",
+	"project_id": "0aee0ed7-4484-4b73-84c3-045c4edd6143"
+}
+
+headers = {
+	"Accept": "application/json",
+	"Content-Type": "application/json",
+	"Authorization": "Bearer YOUR_ACCESS_TOKEN"
+}
+
+response = requests.post(
+	url,
+	headers=headers,
+	json=body
+)
+
+if response.status_code != 200:
+	raise Exception("Non-200 response: " + str(response.text))
+
+data = response.json()
+
